@@ -2,25 +2,88 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>RWTH Wetter</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+
+.container {
+    width: 600px;
+    margin: auto;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.data {
+    font-size: 20px;
+    margin: 20px;
+}
+
+canvas {
+    margin-top: 40px;
+}
+
+</style>
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>RWTH Wetterstation</h1>
 
-Temperatur: <span id="temp"></span> °C<br>
-Luftfeuchte: <span id="hum"></span> %<br>
+<div class="data">
+Temperatur: <span id="temp"></span> °C
+</div>
+
+<div class="data">
+Luftfeuchte: <span id="hum"></span> %
+</div>
+
+<div class="data">
 Wind: <span id="wind"></span> m/s
+</div>
+
+<canvas id="tempChart"></canvas>
+
+</div>
 
 <script>
+
 fetch("data.json")
 .then(r => r.json())
 .then(d => {
-    document.getElementById("temp").textContent = d.temperature_c;
-    document.getElementById("hum").textContent = d.humidity_percent;
-    document.getElementById("wind").textContent = d.wind_m_s;
-});
+
+document.getElementById("temp").textContent = d.temperature_c
+document.getElementById("hum").textContent = d.humidity_percent
+document.getElementById("wind").textContent = d.wind_m_s
+
+const ctx = document.getElementById('tempChart')
+
+new Chart(ctx, {
+type: 'bar',
+data: {
+labels: ["Temperatur", "Luftfeuchte", "Wind"],
+datasets: [{
+label: "Aktuelle Werte",
+data: [
+d.temperature_c,
+d.humidity_percent,
+d.wind_m_s
+]
+}]
+}
+})
+
+})
+
 </script>
 
 </body>
