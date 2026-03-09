@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>RWTH Wetter</title>
+</head>
+
+<body>
+
+<h1>RWTH Wetterstation</h1>
+
+Temperatur: <span id="temp"></span> °C<br>
+Luftfeuchte: <span id="hum"></span> %<br>
+Wind: <span id="wind"></span> m/s
+
+<script>
+fetch("data.json")
+.then(r => r.json())
+.then(d => {
+    document.getElementById("temp").textContent = d.temperature_c;
+    document.getElementById("hum").textContent = d.humidity_percent;
+    document.getElementById("wind").textContent = d.wind_m_s;
+});
+</script>
+
+</body>
+</html>
